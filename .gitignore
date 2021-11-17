@@ -4,3 +4,5 @@ __pycache__
 logs
 logs/client.log
 logs/server.log
+.DS_Store
+logs/.DS_Store

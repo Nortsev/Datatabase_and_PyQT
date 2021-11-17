@@ -42,8 +42,3 @@
 2019-07-16 17:17:22,808 INFO client.py Получено сообщение от пользователя test1:
 hg
 2019-07-16 17:17:22,808 DEBUG decos.py Была вызвана функция get_message c параметрами (<socket.socket fd=260, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 58109), raddr=('127.0.0.1', 7777)>,) , {}. Вызов из модуля common.utils
-2021-11-17 16:58:12,632 DEBUG decos.py Была вызвана функция arg_parser c параметрами () , {}. Вызов из модуля __main__
-2021-11-17 17:00:38,330 DEBUG client.py Разбор приветственного сообщения от сервера: {'response': 200}
-2021-11-17 17:00:38,331 DEBUG client.py Разбор приветственного сообщения от сервера: {'response': 400, 'error': 'Bad Request'}
-2021-11-17 17:00:38,332 DEBUG client.py Сформировано presence сообщение для пользователя Guest
-2021-11-17 17:00:38,333 DEBUG client.py Разбор приветственного сообщения от сервера: {'error': 'Bad Request'}
