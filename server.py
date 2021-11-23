@@ -66,6 +66,7 @@ class Server:
             f'Запущен сервер, порт для подключений: {port} , '
             f'адрес с которого принимаются подключения: {host}. '
             f'Если адрес не указан, принимаются соединения с любых адресов.')
+        self.transport.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.transport.bind((host, port))
         self.transport.settimeout(0.5)
 
