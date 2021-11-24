@@ -13,6 +13,7 @@ from errors import IncorrectDataRecivedError
 from common.variables import *
 from common.utils import *
 from decos import log
+from descripts import Port, Host
 
 # Инициализация логирования сервера.
 logger = logging.getLogger('server')
@@ -22,6 +23,9 @@ class Server:
     """
 
     """
+    port = Port()
+    host = Host()
+
     def __init__(self, transport=None):
         self.host, self.port = self.arg_parser()
         if not transport:
