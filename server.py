@@ -14,12 +14,13 @@ from common.variables import *
 from common.utils import *
 from decos import log
 from descripts import Port, Host
+from metaclasses import MetaServer
 
 # Инициализация логирования сервера.
 logger = logging.getLogger('server')
 
 
-class Server:
+class Server(metaclass=MetaServer):
     """
 
     """
