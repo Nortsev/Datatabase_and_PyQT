@@ -19,7 +19,7 @@ from metaclasses import MetaClient
 logger = logging.getLogger('client')
 
 
-class Client(metaclass=MetaClient):
+class Client:
     """
 
     """
