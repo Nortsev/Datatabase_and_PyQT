@@ -77,7 +77,6 @@ class Server(metaclass=MetaServer):
         self.transport.bind((host, port))
         self.transport.settimeout(0.5)
 
-
     @log
     def listen(self) -> None:
         """
@@ -91,7 +90,7 @@ class Server(metaclass=MetaServer):
         names = dict()
 
         # Слушаем порт
-        ## self.transport.listen(MAX_CONNECTIONS)
+        self.transport.listen(MAX_CONNECTIONS)
         while True:
             # Ждём подключения, если таймаут вышел, ловим исключение.
             try:
@@ -214,7 +213,7 @@ def main():
     database = ServerStorage()
     transport = Server(database)
     transport.connect()
-    # transport.listen()
+    transport.listen()
     while True:
         command = input('Введите комманду: ')
         if command == 'help':
