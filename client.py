@@ -13,6 +13,7 @@ from common.variables import *
 from common.utils import *
 from errors import IncorrectDataRecivedError, ReqFieldMissingError, ServerError
 from decos import log
+from metaclasses import MetaClient
 
 # Инициализация клиентского логера
 logger = logging.getLogger('client')

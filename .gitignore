@@ -7,3 +7,4 @@ logs/server.log
 .DS_Store
 logs/.DS_Store
 logs/client.log
+server_base.db3

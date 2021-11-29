@@ -13,22 +13,29 @@ from errors import IncorrectDataRecivedError
 from common.variables import *
 from common.utils import *
 from decos import log
+from descripts import Port, Host
+from metaclasses import MetaServer
+from server_database import ServerStorage
 
 # Инициализация логирования сервера.
 logger = logging.getLogger('server')
 
 
-class Server:
+class Server(metaclass=MetaServer):
     """
 
     """
-    def __init__(self, transport=None):
+    port = Port()
+    host = Host()
+
+    def __init__(self, database, transport=None):
         self.host, self.port = self.arg_parser()
+        self.database = database
+        self.names = dict()
         if not transport:
             self.transport = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         else:
             self.transport = transport
-
 
     @log
     def arg_parser(self) -> tuple:
@@ -108,8 +115,9 @@ class Server:
             if recv_data_lst:
                 for client_with_message in recv_data_lst:
                     try:
-                        self.process_client_message(get_message(client_with_message), messages, client_with_message, clients,
-                                               names)
+                        self.process_client_message(get_message(client_with_message), messages, client_with_message,
+                                                    clients,
+                                                    names)
                     except:
                         logger.info(f'Клиент {client_with_message.getpeername()} отключился от сервера.')
                         clients.remove(client_with_message)
@@ -141,7 +149,9 @@ class Server:
             # Если такой пользователь ещё не зарегистрирован, регистрируем,
             # иначе отправляем ответ и завершаем соединение.
             if message[USER][ACCOUNT_NAME] not in names.keys():
-                names[message[USER][ACCOUNT_NAME]] = client
+                self.names[message[USER][ACCOUNT_NAME]] = client
+                client_ip, client_port = client.getpeername()
+                self.database.user_login(message[USER][ACCOUNT_NAME], client_ip, client_port)
                 send_message(client, RESPONSE_200)
             else:
                 response = RESPONSE_400
@@ -157,6 +167,7 @@ class Server:
             return
         # Если клиент выходит
         elif ACTION in message and message[ACTION] == EXIT and ACCOUNT_NAME in message:
+            self.database.user_logout(message[ACCOUNT_NAME])
             clients.remove(names[ACCOUNT_NAME])
             names[ACCOUNT_NAME].close()
             del names[ACCOUNT_NAME]
@@ -189,10 +200,39 @@ class Server:
                 f'Пользователь {message[DESTINATION]} не зарегистрирован на сервере, отправка сообщения невозможна.')
 
 
+def print_help():
+    print('Поддерживаемые комманды:')
+    print('users - список известных пользователей')
+    print('connected - список подключенных пользователей')
+    print('loghist - история входов пользователя')
+    print('exit - завершение работы сервера.')
+    print('help - вывод справки по поддерживаемым командам')
+
+
 def main():
-    transport = Server()
+    database = ServerStorage()
+    transport = Server(database)
     transport.connect()
     transport.listen()
+    while True:
+        command = input('Введите комманду: ')
+        if command == 'help':
+            print_help()
+        elif command == 'exit':
+            break
+        elif command == 'users':
+            for user in sorted(database.users_list()):
+                print(f'Пользователь {user[0]}, последний вход: {user[1]}')
+        elif command == 'connected':
+            for user in sorted(database.active_users_list()):
+                print(f'Пользователь {user[0]}, подключен: {user[1]}:{user[2]}, время установки соединения: {user[3]}')
+        elif command == 'loghist':
+            name = input(
+                'Введите имя пользователя для просмотра истории. Для вывода всей истории, просто нажмите Enter: ')
+            for user in sorted(database.login_history(name)):
+                print(f'Пользователь: {user[0]} время входа: {user[1]}. Вход с: {user[2]}:{user[3]}')
+        else:
+            print('Команда не распознана.')
 
 
 if __name__ == '__main__':
