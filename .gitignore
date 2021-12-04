@@ -8,3 +8,6 @@ logs/server.log
 logs/.DS_Store
 logs/client.log
 server_base.db3
+*.db3
+*.db3-journal
+
