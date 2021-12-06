@@ -2,10 +2,10 @@ from PyQt5.QtWidgets import QDialog, QPushButton, QLineEdit, QApplication, QLabe
 
 
 class UserNameDialog(QDialog):
-    '''
+    """
     Класс реализующий стартовый диалог с запросом логина и пароля
     пользователя.
-    '''
+    """
 
     def __init__(self):
         super().__init__()
@@ -36,8 +36,11 @@ class UserNameDialog(QDialog):
         self.client_passwd.setEchoMode(QLineEdit.Password)
         self.show()
 
-    def click(self):
-        '''Метод обрабтчик кнопки ОК.'''
+    def click(self) -> None:
+        """
+        Метод обрабтчик кнопки ОК
+        :return:
+        """
         if self.client_name.text() and self.client_passwd.text():
             self.ok_pressed = True
             qApp.exit()
