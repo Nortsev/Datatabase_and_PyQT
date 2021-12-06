@@ -1,28 +1,29 @@
+import datetime
+from common.variables import *
 from sqlalchemy import create_engine, Table, Column, Integer, String, Text, MetaData, DateTime
 from sqlalchemy.orm import mapper, sessionmaker
 import os
-import sys
-sys.path.append('../')
-from common.variables import *
-import datetime
 
 
 class ClientDatabase:
     """
     Класс - база данных сервера.
     """
+
     class KnownUsers:
         """
         Класс - отображение таблицы известных пользователей.
         """
+
         def __init__(self, user):
             self.id = None
             self.username = user
 
-    class MessageHistory:
+    class MessageStat:
         """
-        Класс - отображение таблицы истории сообщений
+        Класс - отображение для таблицы статистики переданных сообщений.
         """
+
         def __init__(self, contact, direction, message):
             self.id = None
             self.contact = contact
@@ -34,6 +35,7 @@ class ClientDatabase:
         """
         Класс - отображение списка контактов
         """
+
         def __init__(self, contact):
             self.id = None
             self.name = contact
@@ -66,13 +68,12 @@ class ClientDatabase:
                          )
         self.metadata.create_all(self.database_engine)
         mapper(self.KnownUsers, users)
-        mapper(self.MessageHistory, history)
+        mapper(self.MessageStat, history)
         mapper(self.Contacts, contacts)
         Session = sessionmaker(bind=self.database_engine)
         self.session = Session()
         self.session.query(self.Contacts).delete()
         self.session.commit()
-
 
     def add_contact(self, contact) -> None:
         """
@@ -80,7 +81,9 @@ class ClientDatabase:
         :param contact:
         :return:
         """
-        if not self.session.query(self.Contacts).filter_by(name=contact).count():
+        if not self.session.query(
+                self.Contacts).filter_by(
+            name=contact).count():
             contact_row = self.Contacts(contact)
             self.session.add(contact_row)
             self.session.commit()
@@ -93,6 +96,13 @@ class ClientDatabase:
         """
 
         self.session.query(self.Contacts).filter_by(name=contact).delete()
+
+    def contacts_clear(self) -> None:
+        """
+        Метод очищающий таблицу со списком контактов.
+        :return:
+        """
+        self.session.query(self.Contacts).delete()
 
     def add_users(self, users_list) -> None:
         """
@@ -114,7 +124,7 @@ class ClientDatabase:
         :param message:
         :return:
         """
-        message_row = self.MessageHistory(contact, direction, message)
+        message_row = self.MessageStat(contact, direction, message)
         self.session.add(message_row)
         self.session.commit()
 
@@ -123,14 +133,16 @@ class ClientDatabase:
         Функция возвращающяя контакты
         :return:
         """
-        return [contact[0] for contact in self.session.query(self.Contacts.name).all()]
+        return [contact[0]
+                for contact in self.session.query(self.Contacts.name).all()]
 
     def get_users(self) -> list:
         """
         Функция возвращающяя список известных пользователей
         :return:
         """
-        return [user[0] for user in self.session.query(self.KnownUsers.username).all()]
+        return [user[0]
+                for user in self.session.query(self.KnownUsers.username).all()]
 
     def check_user(self, user) -> bool:
         """
@@ -138,7 +150,9 @@ class ClientDatabase:
         :param user:
         :return:
         """
-        if self.session.query(self.KnownUsers).filter_by(username=user).count():
+        if self.session.query(
+                self.KnownUsers).filter_by(
+            username=user).count():
             return True
         else:
             return False
@@ -160,12 +174,15 @@ class ClientDatabase:
         :param contact:
         :return:
         """
-        query = self.session.query(self.MessageHistory).filter_by(contact=contact)
-        return [(history_row.contact, history_row.direction, history_row.message, history_row.date)
-                for history_row in query.all()]
+        query = self.session.query(
+            self.MessageStat).filter_by(
+            contact=contact)
+        return [(history_row.contact,
+                 history_row.direction,
+                 history_row.message,
+                 history_row.date) for history_row in query.all()]
 
 
 if __name__ == '__main__':
     test_db = ClientDatabase('test1')
-    print(sorted(test_db.get_history('test2') , key=lambda item: item[3]))
-
+    print(sorted(test_db.get_history('test2'), key=lambda item: item[3]))
