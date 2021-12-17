@@ -253,9 +253,9 @@ class ServerStorage:
             self.AllUsers).filter_by(
             name=contact).first()
         if not contact or self.session.query(
-                self.UsersContacts).filter_by(
-            user=user.id,
-            contact=contact.id).count():
+            self.UsersContacts).filter_by(
+                user=user.id,
+                contact=contact.id).count():
             return
 
         contact_row = self.UsersContacts(user.id, contact.id)
@@ -353,6 +353,3 @@ class ServerStorage:
             self.UsersHistory.accepted
         ).join(self.AllUsers)
         return query.all()
-
-
-

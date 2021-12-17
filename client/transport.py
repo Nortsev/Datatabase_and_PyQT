@@ -100,7 +100,8 @@ class ClientTransport(threading.Thread, QObject):
                         raise ServerError(ans[ERROR])
                     elif ans[RESPONSE] == 511:
                         ans_data = ans[DATA]
-                        hash = hmac.new(passwd_hash_string, ans_data.encode('utf-8'), 'MD5')
+                        hash = hmac.new(
+                            passwd_hash_string, ans_data.encode('utf-8'), 'MD5')
                         digest = hash.digest()
                         my_ans = RESPONSE_511
                         my_ans[DATA] = binascii.b2a_base64(

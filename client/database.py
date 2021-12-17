@@ -47,8 +47,12 @@ class ClientDatabase:
         """
         path = os.path.dirname(os.path.realpath(__file__))
         filename = f'client_{name}.db3'
-        self.database_engine = create_engine(f'sqlite:///{os.path.join(path, filename)}', echo=False, pool_recycle=7200,
-                                             connect_args={'check_same_thread': False})
+        self.database_engine = create_engine(
+            f'sqlite:///{os.path.join(path, filename)}',
+            echo=False,
+            pool_recycle=7200,
+            connect_args={
+                'check_same_thread': False})
 
         self.metadata = MetaData()
         users = Table('known_users', self.metadata,
@@ -82,8 +86,8 @@ class ClientDatabase:
         :return:
         """
         if not self.session.query(
-                self.Contacts).filter_by(
-            name=contact).count():
+            self.Contacts).filter_by(
+                name=contact).count():
             contact_row = self.Contacts(contact)
             self.session.add(contact_row)
             self.session.commit()
@@ -151,8 +155,8 @@ class ClientDatabase:
         :return:
         """
         if self.session.query(
-                self.KnownUsers).filter_by(
-            username=user).count():
+            self.KnownUsers).filter_by(
+                username=user).count():
             return True
         else:
             return False

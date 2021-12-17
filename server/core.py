@@ -67,7 +67,8 @@ class MessageProcessor(threading.Thread):
                         self.process_client_message(
                             get_message(client_with_message), client_with_message)
                     except (OSError, json.JSONDecodeError, TypeError) as err:
-                        logger.debug(f'Getting data from client exception.', exc_info=err)
+                        logger.debug(
+                            f'Getting data from client exception.', exc_info=err)
                         self.remove_client(client_with_message)
 
     def remove_client(self, client) -> None:
@@ -106,7 +107,7 @@ class MessageProcessor(threading.Thread):
         :return:
         """
         if message[DESTINATION] in self.names and self.names[message[DESTINATION]
-        ] in self.listen_sockets:
+                                                             ] in self.listen_sockets:
             try:
                 send_message(self.names[message[DESTINATION]], message)
                 logger.info(
@@ -249,7 +250,11 @@ class MessageProcessor(threading.Thread):
             message_auth = RESPONSE_511
             random_str = binascii.hexlify(os.urandom(64))
             message_auth[DATA] = random_str.decode('ascii')
-            hash = hmac.new(self.database.get_hash(message[USER][ACCOUNT_NAME]), random_str, 'MD5')
+            hash = hmac.new(
+                self.database.get_hash(
+                    message[USER][ACCOUNT_NAME]),
+                random_str,
+                'MD5')
             digest = hash.digest()
             logger.debug(f'Auth message = {message_auth}')
             try:

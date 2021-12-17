@@ -7,6 +7,7 @@ from server.config_window import ConfigWindow
 from server.add_user import RegisterUser
 from server.remove_user import DelUserDialog
 
+
 class MainWindow(QMainWindow):
     """
     Класс - основное окно сервера.
@@ -111,4 +112,3 @@ class MainWindow(QMainWindow):
         global rem_window
         rem_window = DelUserDialog(self.database, self.server_thread)
         rem_window.show()
-

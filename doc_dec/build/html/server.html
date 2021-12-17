@@ -1,0 +1,170 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Документация модуля сервера &#8212; doc_dec 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="id1">
+<h1>Документация модуля сервера<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<p>Серверный модуль мессенджера.</p>
+<p>Инструкция:</p>
+<p>Модуль подерживает аргементы командной стороки:</p>
+<ol class="arabic simple">
+<li><ul class="simple">
+<li><p>p - Порт на котором принимаются соединения</p></li>
+</ul>
+</li>
+<li><ul class="simple">
+<li><p>a - Адрес с которого принимаются соединения.</p></li>
+</ul>
+</li>
+<li><ul class="simple">
+<li><p>-no_gui Запуск только основных функций, без графической оболочки.</p></li>
+</ul>
+</li>
+</ol>
+<p>В данном режиме поддерживается только 1 команда: exit - завершение работы.</p>
+<p>Примеры использования:</p>
+<p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">server.py</span> <span class="pre">-</span> <span class="pre">p</span> <span class="pre">8080</span></code></p>
+<p><em>Запуск сервера на порту 8080</em></p>
+<p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">server.py</span> <span class="pre">-</span> <span class="pre">a</span> <span class="pre">localhost</span></code></p>
+<p><em>Запуск сервера принимающего только соединения с localhost</em></p>
+<p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">server.py</span> <span class="pre">-</span> <span class="pre">-no</span> <span class="pre">-</span> <span class="pre">gui</span></code></p>
+<p><em>Запуск без графической оболочки</em></p>
+<section id="server-py">
+<h2>server.py<a class="headerlink" href="#server-py" title="Permalink to this headline">¶</a></h2>
+<p>Запускаемый модуль, содержит парсер аргументов командной строки и функционал инициализации приложения.</p>
+<p>server. <a href="#id2"><span class="problematic" id="id3">**</span></a>arg_parser ** ()
+Парсер аргументов командной строки, возвращает кортеж из 4 элементов:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>адрес с которого принимать соединения</p></li>
+<li><p>порт</p></li>
+<li><p>флаг запуска GUI</p></li>
+</ul>
+</div></blockquote>
+<p>server. <a href="#id4"><span class="problematic" id="id5">**</span></a>config_load ** ()
+Функция загрузки параметров конфигурации из ini файла.
+В случае отсутствия файла задаются параметры по умолчанию.</p>
+</section>
+<section id="core-py">
+<h2>core.py<a class="headerlink" href="#core-py" title="Permalink to this headline">¶</a></h2>
+<p>: members:</p>
+</section>
+<section id="database-py">
+<h2>database.py<a class="headerlink" href="#database-py" title="Permalink to this headline">¶</a></h2>
+<p>: members:</p>
+</section>
+<section id="main-window-py">
+<h2>main_window.py<a class="headerlink" href="#main-window-py" title="Permalink to this headline">¶</a></h2>
+<p>: members:</p>
+</section>
+<section id="add-user-py">
+<h2>add_user.py<a class="headerlink" href="#add-user-py" title="Permalink to this headline">¶</a></h2>
+<p>: members:</p>
+</section>
+<section id="remove-user-py">
+<h2>remove_user.py<a class="headerlink" href="#remove-user-py" title="Permalink to this headline">¶</a></h2>
+<p>: members:</p>
+</section>
+<section id="config-window-py">
+<h2>config_window.py<a class="headerlink" href="#config-window-py" title="Permalink to this headline">¶</a></h2>
+<p>: members:</p>
+</section>
+<section id="stat-window-py">
+<h2>stat_window.py<a class="headerlink" href="#stat-window-py" title="Permalink to this headline">¶</a></h2>
+<p>: members:</p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">doc_dec</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Nortsev.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/server.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -22,6 +22,7 @@ def log(func_to_log):
 
     return log_saver
 
+
 def login_required(func) -> None:
     """
     Декоратор, проверяющий, что клиент авторизован на сервере.

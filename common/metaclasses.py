@@ -46,5 +46,6 @@ class MetaClient(type):
         if 'get_message' in methods or 'send_message' in methods:
             pass
         else:
-            raise TypeError('Отсутствуют вызовы функций, работающих с сокетами.')
+            raise TypeError(
+                'Отсутствуют вызовы функций, работающих с сокетами.')
         super().__init__(clsname, bases, clsdict)

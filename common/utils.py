@@ -1,13 +1,14 @@
+from common.decos import log
 from common.variables import *
 from common.errors import IncorrectDataRecivedError, NonDictInputError
 import json
 import sys
 sys.path.append('../')
-from common.decos import log
 
 
 # Утилита приёма и декодирования сообщения
-# принимает байты выдаёт словарь, если приняточто-то другое отдаёт ошибку значения
+# принимает байты выдаёт словарь, если приняточто-то другое отдаёт ошибку
+# значения
 @log
 def get_message(client):
     encoded_response = client.recv(MAX_PACKAGE_LENGTH)
